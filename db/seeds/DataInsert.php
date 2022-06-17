@@ -19,7 +19,7 @@ class DataInsert extends AbstractSeed
 
 
  $data = [
-            ['usuario' => 'sysadmin', 'senha' => Security::hash('adminpassword', 'md5')] // aqui ele insere os dados na tabela Login, transformando a senha com hash MD5
+            ['usuario' => 'admin', 'senha' => Security::hash('admin', 'md5')] // aqui ele insere os dados na tabela Login, transformando a senha com hash MD5
         ];
 
         $this->table('Login')

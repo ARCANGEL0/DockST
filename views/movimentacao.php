@@ -379,12 +379,6 @@ $movimento = new movimentosController();
 
         </select>
 
-<div id="reportrange" class="btn btn-outline-info filtro" style="width: auto">
-    <i class="fa fa-calendar"></i>&nbsp;
-    <span></span> <i class="fa fa-caret-down"></i>
-</div>
-
-
 
 </div>
 
@@ -525,35 +519,100 @@ $movimento = new movimentosController();
                     columns: [ 0, 2, 3,4,5],
                     grouped_array_index: [1]
                 },
+                filename: 'DockST - Relatório Excel',
                 className: "btn btn-success",
-                text: "<i class='fa fa-file-excel'></i>&nbsp;&nbsp; Gerar relatório em Excel"
+                text: "<i class='fa fa-file-excel'></i>&nbsp;&nbsp; Gerar relatório em  Excel",
+                customize: function(xlsx) {
+
+
+ var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                $('row:first c', sheet).attr( 's', '51' );
+                // não achei formas de combinar estilos no excelHtml5
+
+
+
+
+ //fim customize
+
+
+                }
             },
+
             {
-                extend: 'pdfHtml5',
-                exportOptions: {
+          text: "<i class='fa fa-file-pdf'></i>&nbsp;&nbsp; Gerar relatório em PDF",
+          className: "btn  btn-danger",
+          extend: 'pdfHtml5',
+          filename: 'DockST - Relatório PDF',
+          orientation: 'landscape', //portrait
+          pageSize: 'A4', //A3 , A5 , A6 , legal , letter
+           exportOptions: {
                     columns: [ 0, 2, 3,4,5],
-                    grouped_array_index: [1],
-
-
-
+                    grouped_array_index: [1]
                 },
-              
+          customize: function (doc) {
+            doc.content.splice(0,1);
+            var now = new Date();
+            var jsDate = now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear();
+            doc.pageMargins = [20,60,20,30];
+            doc.defaultStyle.fontSize = 14;
+            doc.styles.tableHeader.fontSize = 14;
+            doc['header']=(function() {
+              return {
+                columns: [
+               
+                  {
+                    alignment: 'left',
+                    italics: true,
+                    text: 'DockST',
+                    fontSize: 18,
+                    margin: [10,0]
+                  },
+                  {
+                    alignment: 'right',
+                    fontSize: 14,
+                    text: 'Relatório de movimentações'
+                  }
+                ],
+                margin: 20
+              }
+            });
+            doc['footer']=(function(page, pages) {
+              return {
+                columns: [
+                  {
+                    alignment: 'left',
+                    text: ['Gerado em: ', { text: jsDate.toString() }]
+                  },
+                  {
+                    alignment: 'right',
+                    text: ['pág ', { text: page.toString() },  ' de ', { text: pages.toString() }]
+                  }
+                ],
+                margin: 20
+              }
+            });
+        
+            var objLayout = {};
+            objLayout['hLineWidth'] = function(i) { return .5; };
+            objLayout['vLineWidth'] = function(i) { return .5; };
+            objLayout['hLineColor'] = function(i) { return '#000'; };
+            objLayout['vLineColor'] = function(i) { return '#aaa'; };
+            objLayout['paddingLeft'] = function(i) { return 18; };
+            objLayout['paddingRight'] = function(i) { return 4; };
+            doc.content[0].layout = objLayout;
+        }
+        }
 
-                footer: true,
-                header: true,
 
+          
 
-                className: "btn btn-danger",
-                text: "<i class='fa fa-file-pdf'></i>&nbsp;&nbsp; Gerar relatório em PDF"
-
-            }
         ],
       "ajax": '../controllers/db/getMovimentacoes.php',
       "columnDefs": [
       {"targets":[1,5], "visible": false},
       {"render": acoes, "data": null, "targets": [6]},
       {"targets":[3,4], "render":function(data){
-      return moment(data).format('dddd, DD MMMM  YYYY');
+      return moment(data).format('dddd, DD MMM YYYY');
     }}
 
       ],
@@ -688,68 +747,6 @@ table.column(1).search(this.value).draw();
 
   });
 
-// filtro para Datas 
-
-    moment.locale('pt-br');
-
-    var dataInicio = moment().subtract(29, 'days');
-    var dataFim = moment();
-
-    function cb(dataInicio, dataFim) {
-        $('#reportrange span').html(dataInicio.format('D MMMM, YYYY') + ' - ' + dataFim.format('D MMMM , YYYY'));
-
-  $('#reportrange').on('apply.daterangepicker', function(ev, picker)
-    // funcao que detecta mudanca de data
-{
-    startdate=picker.startDate.format('YYYY-MM-DD');
-    enddate=picker.endDate.format('YYYY-MM-DD');
-
-    $('#reportrange span').val(startdate + ' - ' + enddate);
- 
-    alert(startdate+" ---- "+enddate);
- 
- 
-});
-
-
-    }
-    $('#reportrange').daterangepicker({
-        startDate: dataInicio,
-        endDate: dataFim,
-        ranges: {
-           'Hoje': [moment(), moment()],
-           'Ontem': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Últimos 7 dias': [moment().subtract(6, 'days'), moment()],
-           'Últimos 30 dias': [moment().subtract(29, 'days'), moment()],
-           'Este mês': [moment().startOf('month'), moment().endOf('month')],
-           'Mês passado': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-           'Neste ano': [moment().subtract(7, 'month').startOf('month'), moment().add(4, 'month').startOf('month')]
-
-        },
-
-"locale": {
-    "format": "DD/MM/YYYY",
-    "separator": " à ",
-    "applyLabel": "Aplicar",
-    "cancelLabel": "Cancelar",
-    "customRangeLabel": "Outro"
-  },
-
-
-
-    }, cb);
-
-    cb(dataInicio, dataFim);
-
-// datas
-
-// validar datas de registro
-
-
-
-// fim validar
-
-// buscas por parametros
 
 
     var parametroUrl = function parametroUrl(sParam) {
@@ -782,7 +779,7 @@ table.column(1).search(this.value).draw();
 
 
 
-
+moment.locale('pt-br');
 
 table.on('click','#movConteiners',function(){
    $tr=$(this).closest('tr');

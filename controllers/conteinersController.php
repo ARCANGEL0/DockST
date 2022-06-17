@@ -38,12 +38,13 @@ class conteinersController{
  return $r;
  }
 
- public function atualizarMovimento($oldId, $id,$categoria) {
+ public function atualizarMovimento($oldId, $id,$categoria,$cliente) {
  require_once '../../../models/conteiner.php';
  $conteiner = new conteiner();
  $conteiner->setId($id);
  $conteiner->setOldId($oldId);
  $conteiner->setCategoria($categoria);
+ $conteiner->setCliente($cliente); 
 
 
  $r = $conteiner->atualizarMov();

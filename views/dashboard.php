@@ -245,36 +245,16 @@ $conteiner = new conteinersController();
           var todo1 ='<ul class="todo-list" data-widget="todo-list">'+
 
 
-        
-          '<li class="">'+
+          '<li class=" done">'+
 
                       '<div  class="icheck-primary d-inline ml-2">'+
                       '<i class="fa fa-clipboard"></i>'+
 
                       '</div>'+
-                      '<span class="text">Verificar erro no DateRangePicker</span>'+
-                      '<span class="text">e criar filtro por intervalo de data</span>'+
-                      '<span class="text">em movimentações</span>'+
-
-          '<li class="">'+
-
-                      '<div  class="icheck-primary d-inline ml-2">'+
-                      '<i class="fa fa-clipboard"></i>'+
-
-                      '</div>'+
-                      '<span class="text">Editar esquema de exportação da tabela</span>'+
+                      '<span class="text">Editar esquema de exportação da tabela estilizado</span>'+
                       '<span class="text">para agrupar por nome</span>'+
-                      '<span class="text">e total de importações/exportações</span>'+
 
-  '<li class="done">'+
-
-                      '<div  class="icheck-primary d-inline ml-2">'+
-                      '<i class="fa fa-clipboard"></i>'+
-
-                      '</div>'+
-                      '<span class="text">Criar validação para evitar que a "Data de Fim" não anteceda</span>'+
-                      '<span class="text">a "Data de início</span>'+
-
+ 
 
             '<li class="done">'+
 
@@ -286,7 +266,7 @@ $conteiner = new conteinersController();
                         '<span class="text">para outra página, buscando por parâmetro</span>'+
                         '<span class="text">ex: buscar em movimentações pelo Nº do contêiner</span>'+
 
-                        '<span class="text">Criar botões de redirecionamento para cada escola</span>'+
+                     
 
             '<li class="done">'+
 

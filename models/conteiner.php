@@ -146,7 +146,7 @@ public function atualizarMov()
 	}
 
 
-	$sql = "UPDATE Movimentacoes SET FK_Numero_Conteiner = '".$this->id."', Movimentacoes.Categoria='".$this->categoria."' WHERE FK_Numero_Conteiner = '".$this->oldid."';";
+	$sql = "UPDATE Movimentacoes SET FK_Numero_Conteiner = '".$this->id."',Movimentacoes.Cliente='".$this->cliente."', Movimentacoes.Categoria='".$this->categoria."' WHERE FK_Numero_Conteiner = '".$this->oldid."';";
 
 	if($conn->query($sql) === TRUE) {
 		$this->id = mysqli_insert_id($conn);

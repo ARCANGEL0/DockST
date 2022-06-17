@@ -93,7 +93,7 @@ public function inserirBD()
 
 
 	$sql = "INSERT INTO Movimentacoes (FK_Numero_Conteiner,Cliente, Tipo_Movimentacao, Data_Inicio, Data_Fim, Categoria)
-	VALUES ('".$this->id."','".$this->cliente."' ,'".$this->tipo."','".$this->dinicio."','".$this->dfim."','".$this->categoria."')";
+	VALUES ('".$this->id."','".$this->cliente."','".$this->tipo."','".$this->dinicio."','".$this->dfim."','".$this->categoria."')";
 
 	if($conn->query($sql) === TRUE) {
 		$this->id = mysqli_insert_id($conn);
